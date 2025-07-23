@@ -14,7 +14,6 @@ services:
     volumes:
       - ./conf/my.cnf:/etc/my.cnf
       - ./local_mysql8:/var/lib/mysql
-      - ./conf/mysql_db_init:/docker-entrypoint-initdb.d/
       - ./db_import:/db_import
 
 networks:
