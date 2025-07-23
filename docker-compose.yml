@@ -1,0 +1,27 @@
+services:
+  mysql8-lts:
+    image: mysql:lts
+    container_name: "mysql8_lts"
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    ports:
+      - '3306:3306'
+    networks:
+      - mysql-app-network
+    volumes:
+      - ./conf/my.cnf:/etc/my.cnf
+      - ./local_mysql8:/var/lib/mysql
+      - ./conf/mysql_db_init:/docker-entrypoint-initdb.d/
+      - ./db_import:/db_import
+
+networks:
+  mysql-app-network:
+    name: mysql-app-network
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.10.0.0/24
